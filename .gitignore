@@ -1,0 +1,8 @@
+# Project exclude paths
+.vscode
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+code
+libantlr4-cpp-runtime.a
+Makefile
