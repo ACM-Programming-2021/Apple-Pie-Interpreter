@@ -95,6 +95,12 @@ sudo make
 ./code
 ```
 
+运行测试样例：
+
+```
+./code < test.in
+```
+
 
 
 ## 2 Apple Python 语法
