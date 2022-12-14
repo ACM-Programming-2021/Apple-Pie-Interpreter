@@ -49,7 +49,7 @@ Apple Pie 的结构和 Python 解释器是差不多的。其中 `generated` 和 
 
 你可以将 `std::cin`  换成文件输入流等来改变程序的输入方式。
 
-```C++
+```c++
 int main(int argc, const char* argv[]){
     //todo:please don't modify the code below the construction of ifs if you want to use visitor mode
     ANTLRInputStream input(std::cin);
@@ -232,7 +232,7 @@ virtual antlrcpp::Any visitFuncdef(Python3Parser::FuncdefContext *ctx) override 
 arith_expr: term (addorsub_op term)*;
 ```
 
- 学过正则表达式的同学可能知道，这句话的意思就是一个 `term` 后面跟一个或多个 `addorsub_op term` 。
+学过正则表达式的同学可能知道，这句话的意思就是一个 `term` 后面跟一个或多个 `addorsub_op term` 。
 
 在这个例子，匹配结构为 `term addorsub_op term`
 
@@ -275,7 +275,7 @@ virtual antlrcpp::Any visitArith_expr(Python3Parser::Arith_exprContext *ctx) ove
 
 实现 `Scope` ，我们需要一个变量名 $\longmapsto$ 变量值的 `map`，并支持注册一个变量，查询一个变量。
 
-```C++
+```c++
 #include <map>
 #include <string>
 
@@ -318,13 +318,13 @@ virtual antlrcpp::Any visitAtom(Python3Parser::AtomContext *ctx) override {
     }
 ```
 
-我们直接向 `scope` 查询变量即可。
+我们直接向 `Scope` 查询变量即可。
 
 什么时候定义变量呢？
 
 ```
 expr_stmt: testlist ( (augassign testlist) |
-                     ('=' testlist)*);//连等 加等/减等/...
+                     ('=' testlist)*); // 连等 加等/减等/...
 ```
 
 Apple Pie 不支持连等以及 `augassign` 的赋值方式（+= -= ...），因此我这里做了很严格的判定。
@@ -370,7 +370,7 @@ term: factor (muldivmod_op factor)*;
 
 看如下定义，可以看出语法文件把只有乘、除的表达式规定为 `term` ，然后再将 `term` 用加减号连起来。
 
-这样我们就会先计算 `term`，再计算 `arith_expr ` 。
+这样我们就会先计算 `term`，再计算 `arith_expr` 。
 
 当然，这是老式的 `grammar` 设计方式，新风格的设计方式是用 `|` 相连，这在你们的编译器大作业会遇到。
 
