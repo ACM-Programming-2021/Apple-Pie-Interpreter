@@ -91,7 +91,7 @@ sudo make
 
 运行 ApplePie：
 
-```C++
+```bash
 ./code
 ```
 
