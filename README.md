@@ -215,7 +215,7 @@ virtual antlrcpp::Any visitAtom(Python3Parser::AtomContext *ctx) override {
 
  `ctx` 全称为 `Context` ，表示一个语法树上一个节点的所有上下文信息。`getText()` 可以返回一个 `TOKEN` 的字符串原文。
 
-对于一些你暂时不想处理的节点，你可以直接访问子节点来调过它们（Apple Pie 由于语法简单，所以跳过了大量语法节点）
+对于一些你暂时不想处理的节点，你可以直接访问子节点来跳过它们（Apple Pie 由于语法简单，所以跳过了大量语法节点）
 
 ```c++
 virtual antlrcpp::Any visitFuncdef(Python3Parser::FuncdefContext *ctx) override {
