@@ -82,7 +82,7 @@ Apple Pie 已经完成了 `Apple Python` 的 `visitor` ，但你要写的远比�
 
 在 ApplePie 目录下打开终端，执行：
 
-```bash
+```sh
 cmake .
 sudo make
 ```
@@ -91,13 +91,13 @@ sudo make
 
 运行 ApplePie：
 
-```bash
+```sh
 ./code
 ```
 
 运行测试样例：
 
-```
+```sh
 ./code < test.in
 ```
 
@@ -158,7 +158,7 @@ Apple Pie 解释器所解释的语言，它的语法非常简单：没有函数�
 
 - 函数调用。为方便，函数调用结果返回 0。
 
-  ```
+  ```python
   print(a)
   ```
 
@@ -188,19 +188,19 @@ Apple Pie 解释器所解释的语言，它的语法非常简单：没有函数�
 1 + 2
 ```
 
-阅读语法文件 `Python.g4` 后，你会看到
+阅读语法文件 `Python3.g4` 后，你会看到
 
-```
+```g4
 atom: (NAME | NUMBER | STRING+| 'None' | 'True' | 'False' | ('(' test ')'));
 ```
 
 语法 `atom` 是 Python 中最底层的语法结构，在 Apple Pie 中你可以忽略掉多余部分：
 
-```
+```g4
 atom: (NAME | NUMBER);
 ```
 
-显然 1 和 2 是个 NUMBER，因此它们匹配 `atom` 语法。
+显然 1 和 2 是个 `NUMBER` ，因此它们匹配 `atom` 语法。
 
 对于每个语法单元，你的 `Evalvisitor` 都有一个 `visit` 函数来访问他们。为了解释数字常量，我们只要简单地返回它们的值就好。
 
@@ -228,7 +228,7 @@ virtual antlrcpp::Any visitFuncdef(Python3Parser::FuncdefContext *ctx) override 
 
 那么 `+` 怎么处理？继续看语法文件
 
-```
+```g4
 arith_expr: term (addorsub_op term)*;
 ```
 
@@ -322,7 +322,7 @@ virtual antlrcpp::Any visitAtom(Python3Parser::AtomContext *ctx) override {
 
 什么时候定义变量呢？
 
-```
+```g4
 expr_stmt: testlist ( (augassign testlist) |
                      ('=' testlist)*); // 连等 加等/减等/...
 ```
@@ -362,7 +362,7 @@ virtual antlrcpp::Any visitExpr_stmt(Python3Parser::Expr_stmtContext *ctx) overr
 
 注意到 Apple Pie 支持乘法和括号。这种运算优先级是怎么实现的呢？
 
-```
+```g4
 arith_expr: term (addorsub_op term)*;
 addorsub_op: '+'|'-';
 term: factor (muldivmod_op factor)*;
@@ -378,7 +378,7 @@ term: factor (muldivmod_op factor)*;
 
 那么括号呢？还记得上面提到的 `atom` 语法吗：
 
-```
+```g4
 atom: (NAME | NUMBER | STRING+| 'None' | 'True' | 'False' | ('(' test ')'));
 ```
 
@@ -417,7 +417,7 @@ virtual antlrcpp::Any visitAtom(Python3Parser::AtomContext *ctx) override {
 
 函数的调用在哪呢：
 
-```
+```g4
 atom_expr: atom trailer?;
 trailer: '(' (arglist)? ')' ;
 arglist: argument (',' argument)*  (',')?;
@@ -457,7 +457,7 @@ virtual antlrcpp::Any visitAtom_expr(Python3Parser::Atom_exprContext *ctx) overr
 
 事实上，一个合格的解释器不仅仅要能解释正确代码的运行结果，还要能对错误代码进行语法报错。
 
-在本次作业中，这部分被归为 Bonus，但我推荐你们都尝试写一些（不必要做到 100% 报错成功，只是写到错误情况可以顺便处理一下）。
+在本次作业中，这部分被归为 **Bonus**，但我推荐你们都尝试写一些（不必要做到 100% 报错成功，只是写到错误情况可以顺便处理一下）。
 
 ### 4.1 异常类
 
